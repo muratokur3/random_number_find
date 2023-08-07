@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sayi tahmin</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: monospace;
+            font-size: 20px;
+
+        }
+
+        body {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            height: 60vh;
+            width: 100%;
+        }
+
+        #centerDiv {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+            height: 100%;
+            background-color: grey;
+        }
+
+        #btnTahmin {
+            width: 200px;
+            height: 50px;
+            background-color: orange;
+            border: none;
+            border-radius: 100px;
+            margin: 20px;
+            font-weight: 700;
+            color: aliceblue;
+        }
+
+        #kDeger {
+            width: 70%;
+            border-radius: 10px;
+            padding: 10px 0 10px 20px;
+        }
+
+        .deger {
+            color: aliceblue;
+            font-size: 40px;
+            margin-bottom: 30px;
+        }
+
+        #txtIpucu {
+            font-size: 20px;
+            text-align: center;
+            color: orange;
+            opacity: .5;
+        }
+        #skor{
+            color:violet;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="centerDiv">
+        <p id="sonuc" class="deger">???</p>
+        <p id="txtIpucu" class="deger">Dene!</p>
+
+        <input type="text" id="kDeger" placeholder="Sayi giriniz">
+        <input id="btnTahmin" type="button" onclick="calistir()" value="Tahmin Et">
+        <p id="skor"></p>
+    </div>
+
+    <script>
+        let skor=100;
+        let denemesayisi;
+        let rastgeleSayi;
+        function rastgelesayiOlustur() {
+            rastgeleSayi = Math.floor(Math.random() * 100 + 1);
+            denemesayisi=0;
+            window.alert("0-100 arası sayı girin.");
+        }
+        rastgelesayiOlustur();
+
+        const calistir=()=>
+         {
+            let KullaniciDegeri = document.getElementById("kDeger").value;
+            KullaniciDegeri = Number(KullaniciDegeri);
+            if (KullaniciDegeri >= 0 && KullaniciDegeri < 101) 
+            {
+                kontrolEt(KullaniciDegeri, rastgeleSayi);
+                denemesayisi++;
+            }
+            else window.alert("0-100 arası sayı girin");
+        }
+
+        const kontrolEt = (num, random) => {
+                document.getElementById("kDeger").value = "";
+                if (num == random) {
+                    kutla(num);
+                }
+                else {
+                    if (num < random) {
+                        document.getElementById("txtIpucu").innerHTML = "Daha büyük dene!";
+                    }
+                    else {
+                        document.getElementById("txtIpucu").innerHTML = "Daha küçük dene!";
+                    }
+                }
+            }
+
+        const kutla=(sonuc)=> {
+            document.getElementById("sonuc").innerHTML = sonuc;
+            document.getElementById("txtIpucu").innerHTML = "Tebrikler oldu";
+            document.getElementById("kDeger").value = "";
+            document.getElementById("btnTahmin").value = "Yeniden Oyna";
+            document.getElementById("btnTahmin").setAttribute("onclick", "yeniden()");
+            denemesayisi<skor?skor=denemesayisi:skor=skor;
+            document.getElementById("skor").innerHTML="en iyi skor: "+ skor;
+        }
+
+        const yeniden=()=> {
+            document.getElementById("btnTahmin").setAttribute("onclick", "calistir()");
+            document.getElementById("btnTahmin").value = "Tahmin Et";
+            document.getElementById("kDeger").value = "";
+            document.getElementById("txtIpucu").innerHTML = "Dene";
+            document.getElementById("sonuc").innerHTML = "???";
+            rastgelesayiOlustur();
+        }
+
+    </script>
+
+</body>
+
+</html>
